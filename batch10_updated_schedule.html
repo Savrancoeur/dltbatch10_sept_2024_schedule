@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Batch 10 Schedule</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div class="container mx-auto p-8">
+            <h1 class="text-3xl font-bold text-center text-blue-800 mb-4">
+                Data Land Technology's Batch 10 Schedule
+            </h1>
+
+            <div id="warningNote" class="text-center mb-4 hidden">
+                <p class="text-lg font-semibold text-red-600">
+                    Python class will start on 8 Sept 2024
+                </p>
+            </div>
+
+            <div class="flex justify-center space-x-4 mb-8">
+                <button
+                    id="btnMonday"
+                    class="btn-monday px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700"
+                >
+                    Monday
+                </button>
+                <button
+                    id="btnTuesday"
+                    class="btn-tuesday px-6 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700"
+                >
+                    Tuesday
+                </button>
+                <button
+                    id="btnWednesday"
+                    class="btn-wednesday px-6 py-2 bg-yellow-600 text-white font-bold rounded-lg hover:bg-yellow-700"
+                >
+                    Wednesday
+                </button>
+                <button
+                    id="btnThursday"
+                    class="btn-thursday px-6 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700"
+                >
+                    Thursday
+                </button>
+                <button
+                    id="btnFriday"
+                    class="btn-friday px-6 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700"
+                >
+                    Friday
+                </button>
+                <button
+                    id="btnSaturday"
+                    class="btn-saturday px-6 py-2 bg-pink-600 text-white font-bold rounded-lg hover:bg-pink-700"
+                >
+                    Saturday
+                </button>
+                <button
+                    id="btnSunday"
+                    class="btn-sunday px-6 py-2 bg-gray-600 text-white font-bold rounded-lg hover:bg-gray-700"
+                >
+                    Sunday
+                </button>
+            </div>
+
+            <div
+                id="classTime"
+                class="p-8 bg-white shadow-xl rounded-lg text-center hidden"
+            >
+                <ul id="scheduleList" class="space-y-4"></ul>
+            </div>
+        </div>
+
+        <script>
+            const schedules = {
+                Monday: [{ class: "PHP", time: "9:40 to 11:30" }],
+                Tuesday: [{ class: "PHP", time: "9:40 to 11:30" }],
+                Wednesday: [{ class: "JSON", time: "9:40 to 11:30" }],
+                Thursday: [{ class: "-", time: "-" }],
+                Friday: [
+                    { class: "JS Small App", time: "7:30 to 9:30" },
+                    { class: "Laravel", time: "9:40 to 11:30" },
+                ],
+                Saturday: [{ class: "Tailwind CSS", time: "8:30 to 10:30" }],
+                Sunday: [{ class: "Python", time: "9:40 to 11:15" }],
+            };
+
+            $(document).ready(function () {
+                const today = new Date();
+                const warningEndDate = new Date("2024-09-07");
+
+                if (today <= warningEndDate) {
+                    $("#warningNote").show();
+                }
+
+                function showSchedule(day) {
+                    const schedule = schedules[day];
+                    const scheduleList = $("#scheduleList");
+                    scheduleList.empty();
+
+                    if (schedule.length > 0 && schedule[0].class !== "-") {
+                        schedule.forEach((item) => {
+                            const listItem = `<li class="text-lg font-semibold text-gray-700">${item.class} (${item.time})</li>`;
+                            scheduleList.append(listItem);
+                        });
+                    } else {
+                        scheduleList.append(
+                            `<li class="text-lg font-semibold text-gray-700">No Class Today.<br/> Revise the lessons you learned this week.<br/> Recharge your mind and body.<br/> Get ready for the next week.</li>`,
+                        );
+                    }
+
+                    $("#classTime").fadeIn(500);
+                }
+
+                $(".btn-monday").click(() => showSchedule("Monday"));
+                $(".btn-tuesday").click(() => showSchedule("Tuesday"));
+                $(".btn-wednesday").click(() => showSchedule("Wednesday"));
+                $(".btn-thursday").click(() => showSchedule("Thursday"));
+                $(".btn-friday").click(() => showSchedule("Friday"));
+                $(".btn-saturday").click(() => showSchedule("Saturday"));
+                $(".btn-sunday").click(() => showSchedule("Sunday"));
+            });
+        </script>
+    </body>
+</html>
