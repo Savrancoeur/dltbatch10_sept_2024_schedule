@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Batch 10 Schedule</title>
+    <!-- Including jQuery and Tailwind CSS libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
@@ -11,6 +12,7 @@
     class="bg-gray-100 bg-gradient-to-br from-stone-300 to-teal-300 flex items-center justify-center min-h-screen p-4"
   >
     <div class="container mx-auto p-4 sm:p-6 md:p-8">
+      <!-- Main Heading -->
       <h1
         class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-gray-600 mb-4"
       >
@@ -23,49 +25,58 @@
         Schedule
       </h1>
 
+      <!-- Warning Note for Upcoming Class Start Date or End Date -->
       <div id="warningNote" class="text-center mb-4 hidden">
         <p class="text-sm sm:text-base md:text-lg font-semibold text-red-600">
           Python class will start on 8 Sept 2024
         </p>
       </div>
 
+      <!-- Buttons for Each Day of the Week -->
       <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
+        <!-- Monday Button -->
         <button
           id="btnMonday"
           class="btn-day px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
         >
           Monday
         </button>
+        <!-- Tuesday Button -->
         <button
           id="btnTuesday"
           class="btn-day px-4 py-2 sm:px-6 sm:py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
         >
           Tuesday
         </button>
+        <!-- Wednesday Button -->
         <button
           id="btnWednesday"
           class="btn-day px-4 py-2 sm:px-6 sm:py-3 bg-yellow-600 text-white font-bold rounded-lg hover:bg-yellow-700 transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
         >
           Wednesday
         </button>
+        <!-- Thursday Button -->
         <button
           id="btnThursday"
           class="btn-day px-4 py-2 sm:px-6 sm:py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
         >
           Thursday
         </button>
+        <!-- Friday Button -->
         <button
           id="btnFriday"
           class="btn-day px-4 py-2 sm:px-6 sm:py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
         >
           Friday
         </button>
+        <!-- Saturday Button -->
         <button
           id="btnSaturday"
           class="btn-day px-4 py-2 sm:px-6 sm:py-3 bg-pink-600 text-white font-bold rounded-lg hover:bg-pink-700 transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
         >
           Saturday
         </button>
+        <!-- Sunday Button -->
         <button
           id="btnSunday"
           class="btn-day px-4 py-2 sm:px-6 sm:py-3 bg-gray-600 text-white font-bold rounded-lg hover:bg-gray-700 transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
@@ -74,6 +85,7 @@
         </button>
       </div>
 
+      <!-- Display area for the selected day's schedule -->
       <div
         id="classTime"
         class="p-4 sm:p-6 bg-white shadow-xl rounded-lg text-center hidden transform hover:translate-y-1 hover:scale-105 transition-transform duration-300"
@@ -81,6 +93,7 @@
         <ul id="scheduleList" class="space-y-2 sm:space-y-4"></ul>
       </div>
 
+      <!-- Attendance Form Link -->
       <div class="text-center mt-8">
         <a
           href="https://docs.google.com/forms/d/e/1FAIpQLSdcgVYmlhkxxMVCALNuNmt80OT0baDLOSnXthWvYFW_0jGk8A/viewform"
@@ -93,6 +106,7 @@
     </div>
 
     <script>
+      // Define the schedules for each day
       const schedules = {
         Monday: [{ class: "PHP", time: "9:40 to 11:30" }],
         Tuesday: [{ class: "PHP", time: "9:40 to 11:30" }],
@@ -107,39 +121,46 @@
       };
 
       $(document).ready(function () {
+        // Get the current date and define the warning end date
         const today = new Date();
         const warningEndDate = new Date("2024-09-07");
 
+        // Show the warning note if today is before or on the warning end date
         if (today <= warningEndDate) {
           $("#warningNote").show();
         }
 
+        // Function to display the schedule for a selected day
         function showSchedule(day) {
           const schedule = schedules[day];
           const scheduleList = $("#scheduleList");
-          scheduleList.empty();
-          $("#classTime").fadeOut(300);
+          scheduleList.empty(); // Clear any existing schedule
+          $("#classTime").fadeOut(300); // Hide the schedule display area
 
+          // Check if the selected day has classes
           if (schedule && schedule.length > 0 && schedule[0].class !== "-") {
             schedule.forEach((item) => {
               const listItem = `<li class="text-sm sm:text-base md:text-lg font-semibold text-gray-700">${item.class} (${item.time})</li>`;
-              scheduleList.append(listItem);
+              scheduleList.append(listItem); // Add each class to the list
             });
           } else {
+            // If no class, show a message
             scheduleList.append(
               `<li class="text-sm sm:text-base md:text-lg font-semibold text-gray-700">No Class Today.<br/> Revise the lessons you learned this week.<br/> Recharge your mind and body.<br/> Get ready for the next week.</li>`
             );
           }
 
-          $("#classTime").fadeIn(500);
+          $("#classTime").fadeIn(500); // Fade in the schedule display area
 
+          // Highlight the selected day button by adding styles
           $(".btn-day").removeClass("bg-opacity-75 shadow-lg");
           $(`#btn${day}`).addClass("bg-opacity-75 shadow-lg");
         }
 
+        // Event listener for day buttons
         $(".btn-day").click(function () {
-          const day = $(this).attr("id").replace("btn", ""); // Get the day by removing "btn" from the id
-          showSchedule(day);
+          const day = $(this).attr("id").replace("btn", ""); // Get the day name from the button ID
+          showSchedule(day); // Call the function to display the schedule
         });
       });
     </script>
